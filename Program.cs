@@ -96,6 +96,69 @@ class Program
         Console.WriteLine("Not enough stock available.");
         continue;
       }
+
+      bool found = false;
+      for (int i = 0; i < cartCount; i++)
+      {
+        if (cart[i].product.Id == selectedProduct.Id)
+        {
+          cart[i].quantity += quantity;
+          found = true;
+          break;
+        }
+      }
+
+      if (!found)
+      {
+        if (cartCount >= cart.Length)
+        {
+          Console.WriteLine("Cart is full.");
+          continue;
+        }
+
+        cart[cartCount] = new CartItem
+        {
+          product = selectedProduct,
+          quantity = quantity
+        };
+        cartCount++;
+      }
+
+      selectedProduct.DeductStock(quantity);
+      Console.WriteLine("Item added to cart!");
+
+      Console.Write("Continue shopping? (Y/N): ");
+      string choice = Console.ReadLine().ToUpper();
+      continueShopping = choice == "Y";
     }
+  
+    double grandTotal = 0;
+
+    Console.WriteLine("\n=== RECEIPT ===");
+    for (int i = 0; i < cartCount; i++)
+    {
+      double subtotal = cart[i].DetSubtotal();
+      Console.WriteLine($"{cart[i].product.Name} x{cart[i].quantity} = {subtotal}");
+      grandTotal += subtotal;
+    }
+
+    Console.WriteLine($"Grand Total: {grandTotal}");
+
+    double discount = 0;
+    if (grandTotal >= 5000)
+    {
+      discount = grandTotal * 0.10;
+      Console.WriteLine($"Discount: {discount}");
+    }
+
+    double finalTotal = grandTotal - discount;
+    Console.WriteLine($"Final Total: {finalTotal}");
+
+    Console.WriteLine("\=== UPDATED STOCK ===");
+    foreach (var p in products)
+    {
+       Console.WriteLine($"{p.Name}: {p.RemainingStock}");
+    }
+    Console.WriteLine("\nThank you for shopping!");
   }
 }
