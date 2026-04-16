@@ -4,9 +4,9 @@ class Product
   public int Id;
   public string Name;
   public double Price;
-  public int RemaningStock;
+  public int RemainingStock;
 
-  piblic void DisplayProduct()
+  public void DisplayProduct()
   {
     Console.WriteLine($"{Id}. {Name} - {Price} (Stock: {RemainingStock})");
   }
@@ -18,7 +18,7 @@ class Product
 
   public bool HasEnoughStock(int quantity)
   {
-    return quantity <= RemainingStock
+    return quantity <= RemainingStock;
   }
 
   public void DeductStock(int quantity)
@@ -58,25 +58,25 @@ class Program
     while (continueShopping)
     {
       Console.WriteLine("\n=== STORE MENU ===");
-      foreach (var p in products)
+      foreach (var p in product)
       {
         p.DisplayProduct();
       }
 
       Console.Write("Enter product number: ");
-      if (!int.TryPrase(Console.ReadLine(), out int productChoice))
+      if (!int.TryParse(Console.ReadLine(), out int productChoice))
       {
         Console.WriteLine("Invalid Input!");
         continue;
       }
 
-      if (productChoice < 1 || productChoice > product.Lenght)
+      if (productChoice < 1 || productChoice > product.Length)
       {
         Console.WriteLine("Invalid Product Number!");
         continue;
       }
 
-      Product selectedeProduct = products[productChoice - 1];
+      Product selectedProduct = product[productChoice - 1];
 
       if (selectedProduct.RemainingStock == 0)
       {
@@ -85,7 +85,7 @@ class Program
       }
 
       Console.Write("Enter quantity!");
-      if (!int.TryPrase(Console.ReadLine(), out int quantity) || quantity <= 0)
+      if (!int.TryParse(Console.ReadLine(), out int quantity) || quantity <= 0)
       {
         Console.WriteLine("Invalid quantity!");
         continue;
@@ -137,7 +137,7 @@ class Program
     Console.WriteLine("\n=== RECEIPT ===");
     for (int i = 0; i < cartCount; i++)
     {
-      double subtotal = cart[i].DetSubtotal();
+      double subtotal = cart[i].GetSubtotal();
       Console.WriteLine($"{cart[i].product.Name} x{cart[i].quantity} = {subtotal}");
       grandTotal += subtotal;
     }
@@ -154,8 +154,8 @@ class Program
     double finalTotal = grandTotal - discount;
     Console.WriteLine($"Final Total: {finalTotal}");
 
-    Console.WriteLine("\=== UPDATED STOCK ===");
-    foreach (var p in products)
+    Console.WriteLine("\n=== UPDATED STOCK ===");
+    foreach (var p in product)
     {
        Console.WriteLine($"{p.Name}: {p.RemainingStock}");
     }
