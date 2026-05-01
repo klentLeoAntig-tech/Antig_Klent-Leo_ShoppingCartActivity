@@ -34,7 +34,7 @@ class CartItem
   }
 }
 
-Class Order
+class Order
 {
   public int ReceiptNumber;
   public double FinalTotal;
@@ -43,7 +43,7 @@ class Program
 {
   static void Main()
   {
-    Product[] product = 
+    Product[] products = 
     {
       new Product { Id = 1, Name = "Book", Price = 50, RemainingStock = 10, Category = "School Supplies"},
       new Product { Id = 2, Name = "Pentelpen", Price = 20, RemainingStock = 20, Category = "School Supplies"},
@@ -62,7 +62,7 @@ class Program
     Order[] history = new Order[10];
     int historyCount = 0;
 
-    int recieptNumber = 1;
+    int receiptNumber = 1;
 
     bool running = true;
 
@@ -92,7 +92,7 @@ class Program
         continue;
       }
 
-      if (Choice == 1)
+      if (choice == 1)
       {
         Console.WriteLine("Enter product ID: ");
         int id;
@@ -176,12 +176,12 @@ class Program
         if (!int.TryParse(Console.ReadLine(), out index))
             continue;
 
-        if (index < 1 || index > productsLength)
+        if (index < 1 || index > products.Length)
             continue;
 
-        Product seleted = products[index - 1];
+        Product selected = products[index - 1];
 
-        Console.Write("Quantity: "):
+        Console.Write("Quantity: ");
         int qty;
         if (!int.TryParse(Console.ReadLine(), out qty) || qty <= 0)
           continue;
@@ -399,12 +399,12 @@ class Program
 
         Console.WriteLine("\n=== YOUR ORDER ===");
 
-        for (int i = 0; i , cartCount; i++)
+        for (int i = 0; i < cartCount; i++)
         {
           double subtotal = cart[i].GetSubtotal();
           total = subtotal;
 
-          Console.WriteLine($"{cart[i].product.Name} x{cart[i].quantitty} = {subtotal}");
+          Console.WriteLine($"{cart[i].product.Name} x{cart[i].quantity} = {subtotal}");
         }
 
         double discount = (total >= 5000) ? total * 0.10 : 0;
@@ -419,7 +419,7 @@ class Program
 
         while (true)
         {
-          Conssole.WriteLine("Enter payment: ");
+          Console.WriteLine("Enter payment: ");
           if (!double.TryParse(Console.ReadLine(), out payment))
           {
             Console.WriteLine("Invalid input");
@@ -428,7 +428,7 @@ class Program
 
           if (payment < finalTotal)
           {
-            Cnosole.WriteLine("Insufficient payment!");
+            Console.WriteLine("Insufficient payment!");
             continue;
           }
           break;
@@ -436,9 +436,9 @@ class Program
 
         double change = payment - finalTotal;
 
-        Console.WriteLine("\n=== RECIEPT ===");
-        Console.WriteLine($"Reciept #: {recreiptNumber:D4}");
-        Console.WriteLine($"Date: {DateTIme.Now}");
+        Console.WriteLine("\n=== RECEIPT ===");
+        Console.WriteLine($"Receipt #: {receiptNumber:D4}");
+        Console.WriteLine($"Date: {DateTime.Now}");
 
         Console.WriteLine($"Total: {total}");
         Console.WriteLine($"Discount: {discount}");
@@ -449,12 +449,12 @@ class Program
 
         history[historyCount] = new Order
         {
-          RecieptNumber = recieptNumber,
+          ReceiptNumber = receiptNumber,
           FinalTotal = finalTotal
         };
 
         historyCount++;
-        recieptNumber++;
+        receiptNumber++;
 
         Console.WriteLine("\nLOW STOCK ALERT:");
         foreach (var p in products)
@@ -471,7 +471,7 @@ class Program
         Console.WriteLine("\n=== HISTORY ===");
         for (int i = 0; i < historyCount; i++)
         {
-            Console.WriteLine($"Reciept #{history[i].ReciepNumber:D4} - {history[i].FinalTotal}");
+            Console.WriteLine($"Receipt #{history[i].ReceiptNumber:D4} - {history[i].FinalTotal}");
         }
       }
 
@@ -482,10 +482,7 @@ class Program
       }
     }
   }
-
-
-
-
+}
 
 
 
