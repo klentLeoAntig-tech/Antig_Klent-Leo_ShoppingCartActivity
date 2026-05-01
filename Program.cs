@@ -391,11 +391,97 @@ class Program
         {
           Console.WriteLine("Backing....");
         }
-                                    
+      }
 
+      else if (choice == 5)
+      {
+        double total = 0;
+
+        Console.WriteLine("\n=== YOUR ORDER ===");
+
+        for (int i = 0; i , cartCount; i++)
+        {
+          double subtotal = cart[i].GetSubtotal();
+          total = subtotal;
+
+          Console.WriteLine($"{cart[i].product.Name} x{cart[i].quantitty} = {subtotal}");
+        }
+
+        double discount = (total >= 5000) ? total * 0.10 : 0;
+        double finalTotal = total - discount;
+        
+        Console.WriteLine("\n YOUR TOTAL ");
+        Console.WriteLine($"Total: {total}");
+        Console.WriteLine($"Discount: {discount}");
+        Console.WriteLine($"FINAL TOTAL: {finalTotal}");
+
+        double payment;
+
+        while (true)
+        {
+          Conssole.WriteLine("Enter payment: ");
+          if (!double.TryParse(Console.ReadLine(), out payment))
+          {
+            Console.WriteLine("Invalid input");
+            continue;
+          }
+
+          if (payment < finalTotal)
+          {
+            Cnosole.WriteLine("Insufficient payment!");
+            continue;
+          }
+          break;
+        }
+
+        double change = payment - finalTotal;
+
+        Console.WriteLine("\n=== RECIEPT ===");
+        Console.WriteLine($"Reciept #: {recreiptNumber:D4}");
+        Console.WriteLine($"Date: {DateTIme.Now}");
+
+        Console.WriteLine($"Total: {total}");
+        Console.WriteLine($"Discount: {discount}");
+        Console.WriteLine($"Final total: {finalTotal}");
+
+        Console.WriteLine($"Payment: {payment}");
+        Console.WriteLine($"Change: {change}");
+
+        history[historyCount] = new Order
+        {
+          RecieptNumber = recieptNumber,
+          FinalTotal = finalTotal
+        };
+
+        historyCount++;
+        recieptNumber++;
+
+        Console.WriteLine("\nLOW STOCK ALERT:");
+        foreach (var p in products)
+        {
+          if (p.RemainingStock <= 5)
+              Console.WriteLine($"{p.Name} low stock: {p.RemainingStock}");
+        }
+
+        cartCount = 0;
+      }
+
+      else if (choice == 6)
+      {
+        Console.WriteLine("\n=== HISTORY ===");
+        for (int i = 0; i < historyCount; i++)
+        {
+            Console.WriteLine($"Reciept #{history[i].ReciepNumber:D4} - {history[i].FinalTotal}");
+        }
+      }
+
+      else if (choice == 7)
+      {
+        running = false;
+        Console.WriteLine("\nTHANK YOU FOR PURCHASE!");
+      }
     }
   }
-}
 
 
 
