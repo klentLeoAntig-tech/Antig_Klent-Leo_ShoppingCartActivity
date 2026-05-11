@@ -15,3 +15,13 @@ After using AI, I:
 • Reviewed and understood each part of the code 
 • Adjusted variable names for clarity 
 • Tested the program to ensure it works correctly
+
+ Shopping Cart Quiz 2
+ AI usage
+
+ I used AI as a guide to help me understand and improve my code throughtout the development of this project.
+ it help me on learning on how to implement key features such as menu system, add to cart functionally,category filtering, checkout process and creating order history.
+
+ also Ai help me on debugging some error in typings and improved code.
+ On using AI i make sure that i understand each part of the code by studying the explanations.
+ 
